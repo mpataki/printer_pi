@@ -1,0 +1,49 @@
+---
+# tasks file for roles/mpataki.printer_pi
+
+- name: update apt cache
+  apt:
+    update_cache: true
+  become: true
+
+# this might be a little too opinionated
+#- name: upgrade system
+#  apt:
+#    upgrade: true
+#  become: true
+
+- name: install cups
+  apt:
+    name: cups
+    state: present
+  become: true
+
+- name: install hplip
+  apt:
+    name: hplip
+    state: present
+  become: true
+
+- name: cups service
+  service:
+    name: cups
+    enabled: true
+    state: started
+  become: true
+
+- name: add user to the lpadmin group
+  user:
+    name: '{{ ansible_ssh_user }}'
+    append: yes
+    groups: lpadmin
+  become: true
+
+- name: expose cups on the network
+  command: cupsctl --remote-any
+  become: true
+
+- debug:
+    msg: run 'sudo `hp-setup -i` to setup the hp plugin'
+
+- debug:
+    msg: 'config your printer at http://{{ ansible_host }}:631'

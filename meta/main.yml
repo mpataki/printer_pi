@@ -1,0 +1,16 @@
+galaxy_info:
+  role_name: printer_pi
+  author: Mat Pataki
+  description: 'sets up a pi with network printing capabilities'
+  company: 'n/a'
+  license: MIT
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+
+  galaxy_tags: []
+
+dependencies: []
